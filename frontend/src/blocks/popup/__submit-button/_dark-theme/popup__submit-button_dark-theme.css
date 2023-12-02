@@ -1,0 +1,17 @@
+.popup__submit-button_dark-theme {
+    margin-top: 180px;
+    background-color: #fff;
+    color: #000;
+    transition: opacity .2s linear;
+}
+
+.popup__submit-button_dark-theme:hover {
+    opacity: 0.85;
+    background-color: #FFF;
+}
+
+@media screen and (max-width: 650px) {
+    .popup__submit-button_dark-theme {
+        margin-top: 135px;
+    }
+}

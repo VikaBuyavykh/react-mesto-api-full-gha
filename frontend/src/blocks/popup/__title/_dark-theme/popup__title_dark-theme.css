@@ -1,0 +1,10 @@
+.popup__title_dark-theme {
+    text-align: center;
+    color: #fff;
+}
+
+@media screen and (max-width: 650px) {
+    .popup__title_dark-theme {
+        margin-bottom: 40px;
+    }
+}

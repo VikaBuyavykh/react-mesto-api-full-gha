@@ -1,0 +1,14 @@
+.popup__link {
+    margin: 15px 0 0;
+    text-decoration: none;
+    color: #FFF;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    transition: opacity .2s linear;
+}
+
+.popup__link:hover {
+    opacity: .6;
+}

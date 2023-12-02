@@ -1,0 +1,10 @@
+.header_public {
+    padding: 45px 0 41px;
+}
+
+@media screen and (max-width: 950px) {
+    .header_public {
+        padding: 28px 0 31.6px;
+        flex-direction: row;
+    }
+}

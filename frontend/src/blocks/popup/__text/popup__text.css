@@ -1,0 +1,13 @@
+.popup__text {
+    margin: 0;
+    font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0em;
+    text-align: left;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #FFFFFF;
+}

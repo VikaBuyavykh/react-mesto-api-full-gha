@@ -1,0 +1,27 @@
+.header__button {
+    margin: 0;
+    display: none;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    transition: opacity .3s linear;
+}
+
+.header__button:hover {
+    cursor: pointer;
+    opacity: .6;
+}
+
+@media screen and (max-width: 950px) {
+    .header__button {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .header__button {
+        padding-right: 8.4375%;
+    }
+}

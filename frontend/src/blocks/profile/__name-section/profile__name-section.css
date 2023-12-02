@@ -1,0 +1,14 @@
+.profile__name-section {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items:last baseline;
+}
+
+@media screen and (max-width: 752px) {
+    .profile__name-section {
+        position: relative;
+        width: 100%;
+    }    
+}

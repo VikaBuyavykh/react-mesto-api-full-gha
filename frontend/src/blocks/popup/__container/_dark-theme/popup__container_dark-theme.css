@@ -1,0 +1,10 @@
+.popup__container_dark-theme {
+    margin: 30px auto 0;
+    background: #000;
+}
+
+@media screen and (max-width: 650px) {
+    .popup__container_dark-theme {
+        margin-top: 15px;
+    }
+}

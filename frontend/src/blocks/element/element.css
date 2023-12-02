@@ -1,0 +1,19 @@
+.element {
+    margin: 0;
+    padding-bottom: 15px;
+    box-sizing: content-box;
+    background: #FFFFFF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 22px;
+    position: relative;
+}
+
+@media screen and (max-width: 650px) {
+    .element {
+        gap: 25px;
+        padding-bottom: 27px;
+    }
+}

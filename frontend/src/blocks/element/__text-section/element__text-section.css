@@ -1,0 +1,10 @@
+.element__text-section {
+    margin: 0;
+    margin-left: 21px;
+    margin-right: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}

@@ -1,0 +1,11 @@
+.header__sign-out {
+    margin: 0;
+    color: #A9A9A9;
+    font-weight: 400;
+    transition: opacity .3s linear;
+}
+
+.header__sign-out:hover {
+    cursor: pointer;
+    opacity: .6;
+}

@@ -1,0 +1,9 @@
+.element__like-section {
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    justify-content: space-between;
+    align-items: center;
+}

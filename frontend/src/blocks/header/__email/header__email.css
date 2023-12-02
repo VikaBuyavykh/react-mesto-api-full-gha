@@ -1,0 +1,16 @@
+.header__email {
+    margin: 0;
+    align-self: center;
+    color: #FFF;
+    font-weight: 500;
+    width: 70%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 950px) {
+    .header__email {
+        width: 90%;
+    }
+}
