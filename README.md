@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.71.103
+IP 51.250.71.103
 
 Frontend https://vikabuyavykh.nomoredomainsmonster.ru
 
