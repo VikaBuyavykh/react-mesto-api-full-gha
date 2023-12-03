@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 51.250.71.103
 
-Frontend https://...
+Frontend https://vikabuyavykh.nomoredomainsmonster.ru
 
-Backend https://...
+Backend https://api.vikabuyavykh.nomoredomainsmonster.ru

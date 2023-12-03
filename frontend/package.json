@@ -7,7 +7,8 @@
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && scp -r ./dist/* vika@51.250.71.103:/home/vika/mesto-frontend"
   },
   "dependencies": {
     "react": "^18.2.0",
