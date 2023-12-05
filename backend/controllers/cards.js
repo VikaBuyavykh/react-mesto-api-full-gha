@@ -1,7 +1,10 @@
+const mongoose = require('mongoose');
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
 const BadRequestError = require('../errors/bad-request-err');
+
+const { ValidationError, CastError } = mongoose.Error;
 
 const createCard = async (req, res, next) => {
   try {
@@ -16,7 +19,7 @@ const createCard = async (req, res, next) => {
       likes, _id, name, link, owner, createdAt,
     });
   } catch (err) {
-    if (err.name === 'ValidationError') {
+    if (err instanceof ValidationError) {
       return next(new BadRequestError('Ошибка валидации полей'));
     }
     return next(err);
@@ -42,10 +45,10 @@ const deleteCard = async (req, res, next) => {
     if (card.owner.toString() !== req.user._id) {
       throw new ForbiddenError('У вас недостаточно прав, чтобы удалить пост');
     }
-    await Card.findByIdAndDelete(cardId);
+    await card.deleteOne();
     return res.send({ Message: 'Пост удален' });
   } catch (err) {
-    if (err.name === 'CastError') {
+    if (err instanceof CastError) {
       return next(new BadRequestError('Переданы некорректные данные'));
     }
     return next(err);
@@ -66,7 +69,7 @@ const likeCard = async (req, res, next) => {
       likes, _id, name, link, owner, createdAt,
     });
   } catch (err) {
-    if (err.name === 'CastError') {
+    if (err instanceof CastError) {
       return next(new BadRequestError('Переданы некорректные данные'));
     }
     return next(err);
@@ -87,7 +90,7 @@ const dislikeCard = async (req, res, next) => {
       likes, _id, name, link, owner, createdAt,
     });
   } catch (err) {
-    if (err.name === 'CastError') {
+    if (err instanceof CastError) {
       return next(new BadRequestError('Переданы некорректные данные'));
     }
     return next(err);

@@ -1,6 +1,4 @@
-require('dotenv').config();
-
-const { NODE_ENV, JWT_SECRET } = process.env;
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -8,6 +6,9 @@ const ConflictError = require('../errors/conflict-err');
 const BadRequestError = require('../errors/bad-request-err');
 const NotFoundError = require('../errors/not-found-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
+const { NODE_ENV, JWT_SECRET } = require('../config');
+
+const { ValidationError, CastError } = mongoose.Error;
 
 const createUser = async (req, res, next) => {
   try {
@@ -29,7 +30,7 @@ const createUser = async (req, res, next) => {
   } catch (err) {
     if (err.code === 11000) {
       return next(new ConflictError('Такой пользователь уже существует'));
-    } if (err.name === 'ValidationError') {
+    } if (err instanceof ValidationError) {
       return next(new BadRequestError('Ошибка валидации полей'));
     }
     return next(err);
@@ -45,32 +46,11 @@ const getUsers = async (req, res, next) => {
   }
 };
 
-const getUserById = async (req, res, next) => {
-  try {
-    const { userId } = req.params;
-    const user = await User.findById(userId);
-    if (!user) {
-      throw new NotFoundError('Такого пользователя не существует');
-    }
-    const {
-      name, about, avatar, _id,
-    } = user;
-    return res.status(200).send({
-      name, about, avatar, _id,
-    });
-  } catch (err) {
-    if (err.name === 'CastError') {
-      return next(new BadRequestError('Переданы некорректные данные'));
-    }
-    return next(err);
-  }
-};
-
-const updateProfile = async (req, res, next) => {
+const updateInfo = async (req, res, next, info) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.user._id,
-      { name: req.body.name, about: req.body.about },
+      info,
       { new: true, runValidators: true },
     );
     if (user === null) {
@@ -84,35 +64,21 @@ const updateProfile = async (req, res, next) => {
       });
     }
   } catch (err) {
-    if (err.name === 'ValidationError') {
+    if (err instanceof ValidationError) {
       return next(new BadRequestError('Переданные данные некорректны'));
     }
     return next(err);
   }
 };
 
+const updateProfile = async (req, res, next) => {
+  const info = { name: req.body.name, about: req.body.about };
+  updateInfo(req, res, next, info);
+};
+
 const updateAvatar = async (req, res, next) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      { avatar: req.body.avatar },
-      { new: true, runValidators: true },
-    );
-    if (user !== null) {
-      const {
-        name, about, avatar, _id,
-      } = user;
-      return res.send({
-        name, about, avatar, _id,
-      });
-    }
-    throw new NotFoundError('Такого пользователя не существует');
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      return next(new BadRequestError('Переданные данные некорректны'));
-    }
-    return next(err);
-  }
+  const info = { avatar: req.body.avatar };
+  updateInfo(req, res, next, info);
 };
 
 const login = async (req, res, next) => {
@@ -134,17 +100,40 @@ const login = async (req, res, next) => {
   }
 };
 
+const getUser = async (req, res, next, userId) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new NotFoundError('Такого пользователя не существует');
+    }
+    const {
+      name, about, avatar, _id,
+    } = user;
+    return res.status(200).send({
+      name, about, avatar, _id,
+    });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const getUserById = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    return getUser(req, res, next, userId);
+  } catch (err) {
+    if (err instanceof CastError) {
+      return next(new BadRequestError('Переданы некорректные данные'));
+    }
+    return next(err);
+  }
+};
+
 const getUserData = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
-    if (user !== null) {
-      return res.send(user);
-    }
-    throw new NotFoundError('Такого пользователя не существует');
+    const userId = req.user._id;
+    return getUser(req, res, next, userId);
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return next(new BadRequestError('Переданные данные некорректны'));
-    }
     return next(err);
   }
 };

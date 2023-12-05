@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const regex = require('../utils/regex');
+const urlRegex = require('../utils/regex');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -13,7 +13,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return regex.test(v);
+        return urlRegex.test(v);
       },
       message: (props) => `${props.value} is not a valid avatar`,
     },
@@ -23,10 +23,13 @@ const cardSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
-  likes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-  }],
+  likes: {
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user',
+    }],
+    default: [],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
