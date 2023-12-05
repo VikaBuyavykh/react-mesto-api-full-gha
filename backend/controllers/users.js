@@ -106,12 +106,7 @@ const getUser = async (req, res, next, userId) => {
     if (!user) {
       throw new NotFoundError('Такого пользователя не существует');
     }
-    const {
-      name, about, avatar, _id,
-    } = user;
-    return res.status(200).send({
-      name, about, avatar, _id,
-    });
+    return res.status(200).send(user);
   } catch (err) {
     return next(err);
   }
