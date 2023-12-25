@@ -8,11 +8,6 @@ const { signInValidation, signUpValidation } = require('../utils/reqValidation')
 
 const router = Router();
 
-router.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
 router.post('/signin', signInValidation, login);
 router.post('/signup', signUpValidation, createUser);
 router.use('/users', auth, userRouter);
